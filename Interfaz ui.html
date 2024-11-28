@@ -1,0 +1,63 @@
+/<style>  body {
+     font-family: Inter, sans-serif;
+     padding: 20px;
+   }
+   
+  .container {
+     display: flex;
+     flex-direction: column;
+     gap: 16px;
+   }
+   
+  button {
+     background: #18A0FB;
+     color: white;
+     border: none;
+     padding: 8px 16px;
+     border-radius: 6px;
+     cursor: pointer;
+     transition: background 0.2s;
+   }
+   
+  button:hover {
+     background: #1490E4;
+   }
+ </style>
+ 
+<div class="container">
+   <h2>Mi Plugin</h2>
+   
+  <div class="control-group">
+     <label>Ancho:</label>
+     <input type="number" id="width" value="100">
+   </div>
+   
+  <div class="control-group">
+     <label>Alto:</label>
+     <input type="number" id="height" value="100">
+   </div>
+   
+  <button id="createButton">Crear Rectángulo</button>
+ </div>
+ 
+<script>
+ document.getElementById('createButton').onclick = () => {
+   const width = Number(document.getElementById('width').value);
+   const height = Number(document.getElementById('height').value);
+   
+  parent.postMessage({
+     pluginMessage: {
+       type: 'create-rectangle',
+       payload: { width, height }
+     }
+   }, '*');
+ };
+ 
+// Escuchar mensajes desde el código principal
+ window.onmessage = (event) => {
+   const msg = event.data.pluginMessage;
+   if (msg.type === 'creation-complete') {
+     // Actualizar UI según sea necesario
+   }
+ };
+ </script>
